@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -87,18 +88,6 @@ WSGI_APPLICATION = 'AnotherOneTask.wsgi.application'
 #     }
 # }
 
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'aoapp_db',
-#         'USER': 'user_db',
-#         'PASSWORD': '11235',
-#         'HOST': 'db',
-#         'PORT': '5432',
-#
-#     }
-# }
 
 DATABASES = {
     'default': {

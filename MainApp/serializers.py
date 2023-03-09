@@ -16,7 +16,10 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
 
+
 class NotesSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')
+
     class Meta:
         model = Notes
         fields = '__all__'

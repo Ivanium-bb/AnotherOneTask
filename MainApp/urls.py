@@ -1,23 +1,21 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
-    TokenRefreshView, TokenBlacklistView,
+    TokenRefreshView
 )
 
-from MainApp.views import RegisterView, authentication_test, LogoutView, NotesViewSet
+from MainApp import views
+from MainApp.views import RegisterView, LogoutView, NotesViewSet
+router = routers.DefaultRouter()
+router.register(r'note', views.NotesViewSet, 'note')
 
 urlpatterns = [
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('register/', RegisterView.as_view(), name='sign_up'),
+    path('token/', TokenObtainPairView.as_view(), name='log_in'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('register/', RegisterView.as_view(), name="sign_up"),
-
-    path('token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
-
-    path('authentication-test/', authentication_test),
-
     path('logout/', LogoutView.as_view(), name='log_out'),
-
-    path('note/', NotesViewSet.as_view({"post": "create", "get": "list"})),
-    path('note/<id>/', NotesViewSet.as_view({"patch": "update", "delete": "destroy", "get": "retrieve"})),
-
+    path('',  include(router.urls))
 ]
+
+
