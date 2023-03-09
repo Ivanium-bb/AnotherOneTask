@@ -9,8 +9,6 @@ from .serializers import UserSerializer, NotesSerializer
 from rest_framework.response import Response
 
 
-
-
 class RegisterView(APIView):
     permission_classes = (AllowAny,)
 

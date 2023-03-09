@@ -5,10 +5,9 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView
 )
 
-from MainApp import views
 from MainApp.views import RegisterView, LogoutView, NotesViewSet
 router = routers.DefaultRouter()
-router.register(r'note', views.NotesViewSet, 'note')
+router.register(r'note', NotesViewSet, 'note')
 
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='sign_up'),
