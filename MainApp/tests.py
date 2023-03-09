@@ -1,10 +1,10 @@
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, APITestCase
 from django.urls import reverse
-from rest_framework_simplejwt.tokens import *
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth.hashers import make_password
 
 from MainApp.models import UserData, Notes
-from django.contrib.auth.hashers import make_password
 
 factory = APIRequestFactory()
 
@@ -37,9 +37,8 @@ class AccountTests(APITestCase):
 
     def test_log_out(self):
         password = make_password('Skzw11235')
-        test_user1 = UserData.objects.create(email="test1@test.com", name='test1', password=password)
-        token = RefreshToken.for_user(test_user1)
-        # self.assertTrue('refresh' and 'access' in refresh)
+        test_user = UserData.objects.create(email="test1@test.com", name='test1', password=password)
+        token = RefreshToken.for_user(test_user)
         url = reverse('log_out')
         data = {
             'refresh': str(token)
@@ -47,7 +46,6 @@ class AccountTests(APITestCase):
         header = {'HTTP_AUTHORIZATION': f'Bearer {str(token.access_token)}'}
         response = self.client.post(url, data, **header)
         self.assertEqual(response.status_code, status.HTTP_205_RESET_CONTENT)
-
 
 
 class NoteTests(APITestCase):
