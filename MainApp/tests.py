@@ -35,6 +35,20 @@ class AccountTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue('refresh' and 'access' in response.data)
 
+    def test_log_out(self):
+        password = make_password('Skzw11235')
+        test_user1 = UserData.objects.create(email="test1@test.com", name='test1', password=password)
+        token = RefreshToken.for_user(test_user1)
+        # self.assertTrue('refresh' and 'access' in refresh)
+        url = reverse('log_out')
+        data = {
+            'refresh': str(token)
+        }
+        header = {'HTTP_AUTHORIZATION': f'Bearer {str(token.access_token)}'}
+        response = self.client.post(url, data, **header)
+        self.assertEqual(response.status_code, status.HTTP_205_RESET_CONTENT)
+
+
 
 class NoteTests(APITestCase):
 

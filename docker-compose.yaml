@@ -13,18 +13,5 @@ services:
     env_file:
       - .env
 
-  web:
-    build: .
-    container_name: web
-    command: sh -c "python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
-    restart: always
-    ports:
-      - 8000:8000
-    depends_on:
-      - db
-
-
-
 volumes:
   postgres_data:
